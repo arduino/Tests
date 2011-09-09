@@ -9,7 +9,8 @@ void setup()
   int startMemoryUsage = ATS_GetFreeMemory();
   boolean b;
   File f;
-  
+  byte buf[] = { 'f', 'g', 'h' };
+    
   ATS_begin("Arduino", "SD Test");
   
   ATS_PrintTestStatus("SD.begin()", b = SD.begin(4));
@@ -21,7 +22,7 @@ void setup()
   ATS_PrintTestStatus("SD.open()", f);
   if (!f) goto done;
   
-  f.print("abc");
+  f.write("abc");
   f.print("de");
   f.close();
   
@@ -29,7 +30,7 @@ void setup()
   ATS_PrintTestStatus("SD.open()", f);
   if (!f) goto done;
   
-  f.print("fgh");
+  f.write(buf, 3);
   f.close();
   
   f = SD.open("test.txt");
@@ -73,7 +74,8 @@ void setup()
   ATS_PrintTestStatus("SD.open()", f);
   if (!f) goto done;
   
-  f.print("ABC");
+  f.write('A');
+  f.print("BC");
   f.close();
 
   f = SD.open("test.txt");
