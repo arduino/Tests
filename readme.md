@@ -12,8 +12,9 @@ Arduino Test Suite Library
 This library allows you to create standard test suite for the Arduino software. The goal is to provide a simple and standard way to build tests and tests cases any way you need to as long as you use a few simple principles, and the results return the standard ArduinoTestResultFormat. That can then be parsed by a continuous integration and test system. Which this library provides built in support for. Your tests can then be associated with various issues, and features. These tests can be added to the official list of tests that are run automatically every time code is changed in the official repository. An additional benefit is that these are standard Arduino sketches that you can on your own Arduinos. You can test your work as you develop, or better yet create your tests first and as you could you should see the tests pass.
 
 Functions
+```C
 ATS_begin()
 ATS_end()
 ATS_PrintTestStatus()
-
+```
 
