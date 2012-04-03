@@ -10,8 +10,8 @@
 #include <Ethernet.h>
 #include <EthernetClient.h>
 
-const char* kHostname = "127.0.0.1";
-
+const char* kHostname = "172.31.99.54";
+const uint16_t kPort = 8080;
 const char kPath[] = "/";
 
 byte mac[] =  {
@@ -34,7 +34,7 @@ void setup()
   ATS_begin("Arduino 1.0", "ATS_HttpClient Tests");
 
   ATS_PrintTestStatus("1. DHCP Address obtained", testDHCP());
-  ATS_PrintTestStatus("2. HTTPClient single run", testHTTPClient());
+  ATS_PrintTestStatus("2. HTTPClient single run", testHTTPClient(client));
 
   ATS_ReportMemoryUsage(startMemoryUsage);
   ATS_end();
@@ -45,12 +45,12 @@ void setup()
 boolean testDHCP()
 {
   Serial.println("testDHCP");
-  
+
   int temp = 0;
   IPAddress ip = Ethernet.localIP();
   int length = Serial.println(ip);
   Serial.println(length);
-  
+
   for (int nn = 0; nn < 4; nn++) 
   {
     temp = temp + ip[nn];
@@ -62,20 +62,17 @@ boolean testDHCP()
   return true;
 }
 
-boolean  testHTTPClient()
+boolean  testHTTPClient(EthernetClient cc)
 {
+
   int err =0;
-  
-  EthernetClient c;
-  HttpClient http(c);
-  
-  err = http.get(kHostname, 80, kPath);
+  HttpClient http(cc);
+
+  err = http.get(kHostname, kPort, kPath);
   if (err == 0)
   {
     Serial.println("startedRequest ok");
 
-    http.finishRequest();
-  
     err = http.responseStatusCode();
     if (err >= 0)
     {
@@ -94,30 +91,30 @@ boolean  testHTTPClient()
         Serial.println(bodyLen);
         Serial.println();
         Serial.println("Body returned follows:");
-      
+
         // Now we've got to the body, so we can print it out
         unsigned long timeoutStart = millis();
         char c;
         // Whilst we haven't timed out & haven't reached the end of the body
         while ( (http.connected() || http.available()) &&
-               ((millis() - timeoutStart) < kNetworkTimeout) )
+          ((millis() - timeoutStart) < kNetworkTimeout) )
         {
-            if (http.available())
-            {
-                c = http.read();
-                // Print out this character
-                Serial.print(c);
-               
-                bodyLen--;
-                // We read something, reset the timeout counter
-                timeoutStart = millis();
-            }
-            else
-            {
-                // We haven't got any data, so let's pause to allow some to
-                // arrive
-                delay(kNetworkDelay);
-            }
+          if (http.available())
+          {
+            c = http.read();
+            // Print out this character
+            Serial.print(c);
+
+            bodyLen--;
+            // We read something, reset the timeout counter
+            timeoutStart = millis();
+          }
+          else
+          {
+            // We haven't got any data, so let's pause to allow some to
+            // arrive
+            delay(kNetworkDelay);
+          }
         }
       }
       else
@@ -138,7 +135,7 @@ boolean  testHTTPClient()
     Serial.println(err);
   }
   http.stop();
-  
+
   return false;
 }
 
@@ -148,5 +145,6 @@ void loop()
 
 
 }
+
 
 
