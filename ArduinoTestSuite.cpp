@@ -173,8 +173,9 @@ char	memoryMsg[48];
 	gYotalErrors	=	0;
 	gTestCount		=	0;
 
-	Serial.begin(9600);
-	delay(100);
+// modified by gaftech: I prefer handling serial init in my main file
+//	Serial.begin(9600);
+//	delay(100);
 	
 	gTestTotalElapsedTime = 0;
 
