@@ -33,6 +33,14 @@ boolean	ATS_Test_PWM_Pin(uint8_t digitalPinToTest);
 boolean	ATS_Test_AnalogInput(uint8_t analogPintoTest);
 boolean	ATS_Test_EEPROM(void);
 
+#define ATS_Assert(c)  { \
+               /* maybe use much memory... */                                 \
+               String name = String(__FILE__) + "(" + String(__LINE__) + ")"; \
+               byte str[name.length() + 1];                                   \
+               name.getBytes(str, name.length() + 1);                         \
+               ATS_PrintTestStatus( (char *)str, c );                         \
+                       }
+
 short	ATS_TestSerialLoopback(HardwareSerial *theSerialPort, char *serialPortName);
 
 
