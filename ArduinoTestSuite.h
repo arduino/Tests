@@ -2,6 +2,8 @@
 //************************************************************************
 //*	Aug 31,	2010	<MLS> Started on TestArduino
 //************************************************************************
+#ifndef ARDUINO_TEST_SUITE_H_INCLUDED
+#define ARDUINO_TEST_SUITE_H_INCLUDED
 
 
 #if defined(ARDUINO) && ARDUINO >= 100
@@ -73,3 +75,4 @@ extern	int				gTestCount;
 #define	PASSED	true
 #define	FAILED	false
 
+#endif
