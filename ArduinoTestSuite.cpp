@@ -167,14 +167,18 @@ char	lineBuffer[64];
 //************************************************************************
 void	ATS_begin(char *manufName, char *testSuiteName)
 {
+static bool initialized = false;
 int		freeMemory;
 char	memoryMsg[48];
 
 	gYotalErrors	=	0;
 	gTestCount		=	0;
 
-	Serial.begin(9600);
-	delay(100);
+  if( !initialized ){
+    Serial.begin(9600);
+    delay(100);
+    initialized = true;
+  }
 	
 	gTestTotalElapsedTime = 0;
 
