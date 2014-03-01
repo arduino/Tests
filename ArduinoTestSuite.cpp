@@ -62,25 +62,25 @@ int				gTestCount;
 
 
 
-prog_char	gTextMsg_Manufacturer[]			PROGMEM	=	"MANUFACTURER";
-prog_char	gTextMsg_CPUname[]				PROGMEM	=	"CPU-NAME";
-prog_char	gTextMsg_GCC_VERSION[]			PROGMEM	=	"GCC-Version";
-prog_char	gTextMsg_AVR_LIBC[]				PROGMEM	=	"AVR-LibC-Ver";
-prog_char	gTextMsg_COMPILED_DATE[]		PROGMEM	=	"Compiled-date";
-prog_char	gTextMsg_TEST_SUITE_NAME[]		PROGMEM	=	"Test-Suite-Name";
-prog_char	gTextMsg_memoryUsage[]			PROGMEM	=	"Free-memory";
-prog_char	gTextMsg_dotdotdot[]			PROGMEM	=	"... ";
-prog_char	gTextMsg_ok[]					PROGMEM	=	"ok";
-prog_char	gTextMsg_FAIL[]					PROGMEM	=	"FAIL";
-prog_char	gTextMsg_spaceEqual[]			PROGMEM	=	" = ";
-prog_char	gTextMsg_info[]					PROGMEM	=	"info.";
-prog_char	gTextMsg_dashLine[]				PROGMEM	=	"--------------------------";
-prog_char	gTextMsg_DigitalRW[]			PROGMEM	=	"DigitalReadWrite_";
-prog_char	gTextMsg_PWMoutput[]			PROGMEM	=	"PWMoutput_";
-prog_char	gTextMsg_AnalogInput[]			PROGMEM	=	"AnalogInput_";
+const char	gTextMsg_Manufacturer[]			PROGMEM	=	"MANUFACTURER";
+const char	gTextMsg_CPUname[]				PROGMEM	=	"CPU-NAME";
+const char	gTextMsg_GCC_VERSION[]			PROGMEM	=	"GCC-Version";
+const char	gTextMsg_AVR_LIBC[]				PROGMEM	=	"AVR-LibC-Ver";
+const char	gTextMsg_COMPILED_DATE[]		PROGMEM	=	"Compiled-date";
+const char	gTextMsg_TEST_SUITE_NAME[]		PROGMEM	=	"Test-Suite-Name";
+const char	gTextMsg_memoryUsage[]			PROGMEM	=	"Free-memory";
+const char	gTextMsg_dotdotdot[]			PROGMEM	=	"... ";
+const char	gTextMsg_ok[]					PROGMEM	=	"ok";
+const char	gTextMsg_FAIL[]					PROGMEM	=	"FAIL";
+const char	gTextMsg_spaceEqual[]			PROGMEM	=	" = ";
+const char	gTextMsg_info[]					PROGMEM	=	"info.";
+const char	gTextMsg_dashLine[]				PROGMEM	=	"--------------------------";
+const char	gTextMsg_DigitalRW[]			PROGMEM	=	"DigitalReadWrite_";
+const char	gTextMsg_PWMoutput[]			PROGMEM	=	"PWMoutput_";
+const char	gTextMsg_AnalogInput[]			PROGMEM	=	"AnalogInput_";
 
 //************************************************************************
-void Serial_print_P(prog_char *flashMemStr)
+void Serial_print_P(const char *flashMemStr)
 {
 char	theChar;
 int		ii;
@@ -97,7 +97,7 @@ int		ii;
 }
 
 //************************************************************************
-void Serial_println_P(prog_char *flashMemStr)
+void Serial_println_P(const char *flashMemStr)
 {
 	Serial_print_P(flashMemStr);
 	Serial.println();
