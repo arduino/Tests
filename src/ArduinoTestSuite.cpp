@@ -148,18 +148,16 @@ static void ATS_PrintProperty(int propertyTagNum, const char *propertyName, cons
 }
 
 //************************************************************************
-void	ATS_begin(const char *manufName, const char *testSuiteName)
+void ATS_begin(const char *manufName, const char *testSuiteName, int baudRate)
 {
 	int freeMemory;
 	char memoryMsg[48];
 
+	Serial.begin(baudRate);
+	delay(100);
+
 	gTotalErrors = 0;
 	gTestCount = 0;
-
-// modified by gaftech: I prefer handling serial init in my main file
-//	Serial.begin(9600);
-//	delay(100);
-	
 	gTestTotalElapsedTime = 0;
 
 	Serial.println();
@@ -234,7 +232,7 @@ void	ATS_end()
 
 
 //************************************************************************
-void ATS_PrintTestStatus(char *testString, boolean passed)
+void ATS_PrintTestStatus(const char *testString, boolean passed)
 {
 int	sLen;
 
@@ -360,7 +358,6 @@ int	ATS_TestTimer(	uint8_t	timerPinNumber,
 					char *errorString)
 {
 boolean			passedOK;
-unsigned long	loopCounter;
 unsigned long	lowCount;
 unsigned long	highCount;
 unsigned long	startTime;
@@ -371,7 +368,6 @@ char			numString[48];
 int				pwmValue;
 
 	pwmValue	=	128;
-	loopCounter	=	0;
 	lowCount	=	0;
 	highCount	=	0;
 	passedOK	=	true;
@@ -560,7 +556,7 @@ uint8_t helperpin;
 #if (SERIAL_PORT_COUNT > 1)
 //************************************************************************
 //*	retunrs 0 if no errors, 1 if an error occured
-short	ATS_TestSerialLoopback(HardwareSerial *theSerialPort, char *serialPortName)
+short	ATS_TestSerialLoopback(HardwareSerial *theSerialPort, const char *serialPortName)
 {
 char	xmitChar;
 char	rcvChar;
