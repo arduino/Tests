@@ -1,10 +1,10 @@
 //************************************************************************
-//*	Arduino String Test
-//*		(C) 2010 by Rick Anderson
-//*		Open source as per standard Arduino code
+//*     Arduino String Test
+//*             (C) 2010 by Rick Anderson
+//*             Open source as per standard Arduino code
 //*
 //************************************************************************
-//*	Oct 16,	2010	<ROA> Started on String Test
+//*     Oct 16, 2010    <ROA> Started on String Test
 //************************************************************************
 
 #include	<ArduinoTestSuite.h>
@@ -18,13 +18,12 @@
 //************************************************************************
 void setup()
 {
-  int startMemoryUsage;
+	int startMemoryUsage = ATS_GetFreeMemory();
+	ATS_begin("Arduino", "Test of String Library");
 
-  ATS_begin("Arduino", "Test of String Library");
-
-  String stringOne;
-  String stringTwo;
-  int i=0;
+	String stringOne;
+	String stringTwo;
+	int i = 0;
 
 #if !defined(F) || (ARDUINO >= 100 && !defined(CORE_TEENSY))
 // Arduino 1.0, does not support for using F("cstring") with
@@ -39,50 +38,52 @@ void setup()
 #define F(s) (s)
 #endif
 
-  stringOne = F("flash string");
-  ATS_PrintTestStatus("61. assign flash string", stringOne == "flash string");
-  stringOne += F(" test");
-  ATS_PrintTestStatus("62. append flash string", stringOne == "flash string test");
-  ATS_PrintTestStatus("63. append flash string", stringOne == F("flash string test"));
-  ATS_PrintTestStatus("64. add flash string", F("1234 ") + stringOne == "1234 flash string test");
+	stringOne = F("flash string");
+	ATS_PrintTestStatus("61. assign flash string",
+			    stringOne == "flash string");
+	stringOne += F(" test");
+	ATS_PrintTestStatus("62. append flash string",
+			    stringOne == "flash string test");
+	ATS_PrintTestStatus("63. append flash string",
+			    stringOne == F("flash string test"));
+	ATS_PrintTestStatus("64. add flash string",
+			    F("1234 ") + stringOne == "1234 flash string test");
 
-  stringOne = F("tst");
-  char *ptr = NULL;
-  stringOne.concat(ptr);
-  ATS_PrintTestStatus("65. append", stringOne == "tst");
-  ATS_PrintTestStatus("66. concat", stringOne + "123" + ptr + "hi" == "tst123hi");
-  ATS_PrintTestStatus("67. append", stringOne == "tst");
+	stringOne = F("tst");
+	char *ptr = NULL;
+	stringOne.concat(ptr);
+	ATS_PrintTestStatus("65. append", stringOne == "tst");
+	ATS_PrintTestStatus("66. concat",
+			    stringOne + "123" + ptr + "hi" == "tst123hi");
+	ATS_PrintTestStatus("67. append", stringOne == "tst");
 
-  stringOne = F("TST");
-  stringOne.concat("");
-  ATS_PrintTestStatus("68. append", stringOne == "TST");
-  ATS_PrintTestStatus("69. concat", stringOne + "" == "TST");
-  ATS_PrintTestStatus("70. append", stringOne == "TST");
+	stringOne = F("TST");
+	stringOne.concat("");
+	ATS_PrintTestStatus("68. append", stringOne == "TST");
+	ATS_PrintTestStatus("69. concat", stringOne + "" == "TST");
+	ATS_PrintTestStatus("70. append", stringOne == "TST");
 
-  stringOne = F("ZXDY");
-  stringOne.concat("123");
-  ATS_PrintTestStatus("71. append", stringOne == "ZXDY123");
-  ATS_PrintTestStatus("72. concat", stringOne + "567" == "ZXDY123567");
-  ATS_PrintTestStatus("73. append", stringOne == "ZXDY123");
+	stringOne = F("ZXDY");
+	stringOne.concat("123");
+	ATS_PrintTestStatus("71. append", stringOne == "ZXDY123");
+	ATS_PrintTestStatus("72. concat", stringOne + "567" == "ZXDY123567");
+	ATS_PrintTestStatus("73. append", stringOne == "ZXDY123");
 
-  stringOne = F("ra");
-  stringOne.concat(F("573"));
-  ATS_PrintTestStatus("74. append", stringOne == "ra573");
-  ATS_PrintTestStatus("75. concat", stringOne + F("4543") == "ra5734543");
-  ATS_PrintTestStatus("76. append", stringOne == "ra573");
+	stringOne = F("ra");
+	stringOne.concat(F("573"));
+	ATS_PrintTestStatus("74. append", stringOne == "ra573");
+	ATS_PrintTestStatus("75. concat", stringOne + F("4543") == "ra5734543");
+	ATS_PrintTestStatus("76. append", stringOne == "ra573");
 
-  /*
-    * Test complete
-   */
-
-  ATS_end();
+	/*
+	 * Test complete
+	 */
+	ATS_ReportMemoryUsage(startMemoryUsage);
+	ATS_end();
 }
-
 
 //************************************************************************
 void loop()
 {
-
 }
-
 

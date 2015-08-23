@@ -15,44 +15,34 @@ EthernetClient client;
 
 void setup()
 {
-  int startMemoryUsage;
-  Ethernet.begin(mac);
-  startMemoryUsage = ATS_GetFreeMemory();
-  ATS_begin("Arduino 1.0", "ATS_httpClient Tests");
-
-  ATS_PrintTestStatus("1. DCHCP Address obtained", testDHCP());
-
-  ATS_ReportMemoryUsage(startMemoryUsage);
-  ATS_end();
-
+	Ethernet.begin(mac);
+	int startMemoryUsage = ATS_GetFreeMemory();
+	ATS_begin("Arduino 1.0", "ATS_httpClient Tests");
+	ATS_PrintTestStatus("1. DCHCP Address obtained", testDHCP());
+	ATS_ReportMemoryUsage(startMemoryUsage);
+	ATS_end();
 }
 
 //Test if IP DHCP address receieved
 boolean testDHCP()
 {
-  Serial.println("testDHCP");
-  
-  int temp = 0;
-  IPAddress ip = Ethernet.localIP();
-  int length = Serial.println(ip);
-  Serial.println(length);
-  
-  for (int nn = 0; nn < 4; nn++) 
-  {
-    temp = temp + ip[nn];
-  }
-  if (temp == 0)
-  {
-    return false;
-  }
-  return true;
-}
+	Serial.println("testDHCP");
 
+	int temp = 0;
+	IPAddress ip = Ethernet.localIP();
+	int length = Serial.println(ip);
+	Serial.println(length);
+
+	for (int nn = 0; nn < 4; nn++) {
+		temp = temp + ip[nn];
+	}
+	if (temp == 0) {
+		return false;
+	}
+	return true;
+}
 
 void loop()
 {
-
-
 }
-
 
