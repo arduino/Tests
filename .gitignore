@@ -39,3 +39,8 @@ core.*
 #
 !.gitignore
 
+# Some IDE, I don't know which
+/.settings
+/.cproject
+/.project
+
