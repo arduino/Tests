@@ -19,16 +19,16 @@
 	#define	SERIAL_PORT_COUNT		1
 #endif
 
-void ATS_begin(const char *manufName, const char *testSuiteName);
+void ATS_begin(const char *manufName, const char *testSuiteName, int baudRate=9600);
 void ATS_end();
 
-void ATS_PrintTestStatus(char *testString, boolean passed);
+void ATS_PrintTestStatus(const char *testString, boolean passed);
 boolean	ATS_Test_DigitalPin(uint8_t digitalPinToTest);
 boolean	ATS_Test_PWM_Pin(uint8_t digitalPinToTest);
 boolean	ATS_Test_AnalogInput(uint8_t analogPintoTest);
 boolean	ATS_Test_EEPROM(void);
 
-short ATS_TestSerialLoopback(HardwareSerial *theSerialPort, char *serialPortName);
+short ATS_TestSerialLoopback(HardwareSerial *theSerialPort, const char *serialPortName);
 
 int ATS_GetFreeMemory();
 int ATS_GetMaximumMemoryAllocated();
