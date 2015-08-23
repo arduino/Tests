@@ -23,10 +23,7 @@
 #include	<avr/io.h>
 #include	<avr/eeprom.h>
 
-
-
 #include	"ArduinoTestSuite.h"
-
 
 #include	"avr_cpunames.h"
 
@@ -38,13 +35,10 @@
 	#define	SERIAL_PORT_COUNT		1
 #endif
 
-
-
-
 //************************************************************************
 enum 
 {
-	ATS_Manufacturer	=	1,
+	ATS_Manufacturer = 1,
 	ATS_CPU,
 	ATS_GCC_version,
 	ATS_LIBC_version,
@@ -56,40 +50,38 @@ enum
 };
 unsigned long	gTestStartTime;
 unsigned long	gTestTotalElapsedTime;
-short			gTagIndent;
-int				gYotalErrors;
-int				gTestCount;
+short		gTagIndent;
+int		gTotalErrors;
+int		gTestCount;
 
-
-
-prog_char	gTextMsg_Manufacturer[]			PROGMEM	=	"MANUFACTURER";
-prog_char	gTextMsg_CPUname[]				PROGMEM	=	"CPU-NAME";
-prog_char	gTextMsg_GCC_VERSION[]			PROGMEM	=	"GCC-Version";
-prog_char	gTextMsg_AVR_LIBC[]				PROGMEM	=	"AVR-LibC-Ver";
-prog_char	gTextMsg_COMPILED_DATE[]		PROGMEM	=	"Compiled-date";
-prog_char	gTextMsg_TEST_SUITE_NAME[]		PROGMEM	=	"Test-Suite-Name";
-prog_char	gTextMsg_memoryUsage[]			PROGMEM	=	"Free-memory";
-prog_char	gTextMsg_dotdotdot[]			PROGMEM	=	"... ";
-prog_char	gTextMsg_ok[]					PROGMEM	=	"ok";
-prog_char	gTextMsg_FAIL[]					PROGMEM	=	"FAIL";
-prog_char	gTextMsg_spaceEqual[]			PROGMEM	=	" = ";
-prog_char	gTextMsg_info[]					PROGMEM	=	"info.";
-prog_char	gTextMsg_dashLine[]				PROGMEM	=	"--------------------------";
-prog_char	gTextMsg_DigitalRW[]			PROGMEM	=	"DigitalReadWrite_";
-prog_char	gTextMsg_PWMoutput[]			PROGMEM	=	"PWMoutput_";
-prog_char	gTextMsg_AnalogInput[]			PROGMEM	=	"AnalogInput_";
+const char gTextMsg_Manufacturer[]	PROGMEM	= "MANUFACTURER";
+const char gTextMsg_CPUname[]		PROGMEM	= "CPU-NAME";
+const char gTextMsg_GCC_VERSION[]	PROGMEM	= "GCC-Version";
+const char gTextMsg_AVR_LIBC[]		PROGMEM	= "AVR-LibC-Ver";
+const char gTextMsg_COMPILED_DATE[]	PROGMEM	= "Compiled-date";
+const char gTextMsg_TEST_SUITE_NAME[]	PROGMEM	= "Test-Suite-Name";
+const char gTextMsg_memoryUsage[]	PROGMEM	= "Free-memory";
+const char gTextMsg_dotdotdot[]		PROGMEM	= "... ";
+const char gTextMsg_ok[]		PROGMEM	= "ok";
+const char gTextMsg_FAIL[]		PROGMEM	= "FAIL";
+const char gTextMsg_spaceEqual[]	PROGMEM	= " = ";
+const char gTextMsg_info[]		PROGMEM	= "info.";
+const char gTextMsg_dashLine[]		PROGMEM	= "--------------------------";
+const char gTextMsg_DigitalRW[]		PROGMEM	= "DigitalReadWrite_";
+const char gTextMsg_PWMoutput[]		PROGMEM	= "PWMoutput_";
+const char gTextMsg_AnalogInput[]	PROGMEM	= "AnalogInput_";
 
 //************************************************************************
-void Serial_print_P(prog_char *flashMemStr)
+void Serial_print_P(const char *flashMemStr)
 {
-char	theChar;
-int		ii;
+	char theChar;
+	int ii;
 
-	ii		=	0;
+	ii = 0;
 #if (FLASHEND > 0x10000)
-	while (theChar	=	pgm_read_byte_far(flashMemStr + ii++))
+	while (theChar = pgm_read_byte_far(flashMemStr + ii++))
 #else
-	while (theChar	=	pgm_read_byte_near(flashMemStr + ii++))
+	while (theChar = pgm_read_byte_near(flashMemStr + ii++))
 #endif
 	{
 		Serial.print(theChar);
@@ -97,7 +89,7 @@ int		ii;
 }
 
 //************************************************************************
-void Serial_println_P(prog_char *flashMemStr)
+void Serial_println_P(const char *flashMemStr)
 {
 	Serial_print_P(flashMemStr);
 	Serial.println();
@@ -105,73 +97,64 @@ void Serial_println_P(prog_char *flashMemStr)
 
 //************************************************************************
 //*	this is for internal use only, not made pubic to the API
-static void	ATS_PrintProperty(	int		propertyTagNum,
-								char	*propertyName,
-								char	*propertyValue)
+static void ATS_PrintProperty(int propertyTagNum, const char *propertyName, const char *propertyValue)
 {
-char	lineBuffer[64];
+	char lineBuffer[64];
 
 	strcpy_P(lineBuffer, gTextMsg_info);
-	switch(propertyTagNum)
-	{
-		case 0:
-			strcat(lineBuffer, propertyName);
-			break;
-			
-		case ATS_Manufacturer:
-			strcat_P(lineBuffer, gTextMsg_Manufacturer);
-			break;
+	switch(propertyTagNum) {
+	case 0:
+		strcat(lineBuffer, propertyName);
+		break;
+		
+	case ATS_Manufacturer:
+		strcat_P(lineBuffer, gTextMsg_Manufacturer);
+		break;
 
-		case ATS_CPU:
-			strcat_P(lineBuffer, gTextMsg_CPUname);
-			break;
+	case ATS_CPU:
+		strcat_P(lineBuffer, gTextMsg_CPUname);
+		break;
 
-		case ATS_GCC_version:
-			strcat_P(lineBuffer, gTextMsg_GCC_VERSION);
-			break;
+	case ATS_GCC_version:
+		strcat_P(lineBuffer, gTextMsg_GCC_VERSION);
+		break;
 
-		case ATS_LIBC_version:
-			strcat_P(lineBuffer, gTextMsg_AVR_LIBC);
-			break;
+	case ATS_LIBC_version:
+		strcat_P(lineBuffer, gTextMsg_AVR_LIBC);
+		break;
 
-		case ATS_CompiledDate:
-			strcat_P(lineBuffer, gTextMsg_COMPILED_DATE);
-			break;
+	case ATS_CompiledDate:
+		strcat_P(lineBuffer, gTextMsg_COMPILED_DATE);
+		break;
 
-		case ATS_TestSuiteName:
-			strcat_P(lineBuffer, gTextMsg_TEST_SUITE_NAME);
-			break;
+	case ATS_TestSuiteName:
+		strcat_P(lineBuffer, gTextMsg_TEST_SUITE_NAME);
+		break;
 
-		case ATS_FreeMemory:
-			strcat_P(lineBuffer, gTextMsg_memoryUsage);
-			break;
+	case ATS_FreeMemory:
+		strcat_P(lineBuffer, gTextMsg_memoryUsage);
+		break;
 	}
 
-	while (strlen(lineBuffer) < 20)
-	{
+	while (strlen(lineBuffer) < 20) {
 		strcat(lineBuffer, " ");
 	}
 	
 	strcat_P(lineBuffer, gTextMsg_spaceEqual);
-	if (propertyValue != 0)
-	{
+	if (propertyValue != 0) {
 		strcat(lineBuffer, propertyValue);
 	}
 	Serial.println(lineBuffer);
-
 }
 
-
-
-
 //************************************************************************
-void	ATS_begin(char *manufName, char *testSuiteName)
+void	ATS_begin(const char *manufName, const char *testSuiteName)
 {
-int		freeMemory;
-char	memoryMsg[48];
+	int freeMemory;
+	char memoryMsg[48];
 
-	gYotalErrors	=	0;
-	gTestCount		=	0;
+	gTotalErrors = 0;
+	gTestCount = 0;
 
 	Serial.begin(9600);
 	delay(100);
@@ -182,16 +165,16 @@ char	memoryMsg[48];
 	Serial.println();
 	Serial.println();
 
-	ATS_PrintProperty(ATS_Manufacturer,		0,	manufName);
-	ATS_PrintProperty(ATS_CPU,				0,	_AVR_CPU_NAME_);
-	ATS_PrintProperty(ATS_GCC_version,		0,	__VERSION__);
-	ATS_PrintProperty(ATS_LIBC_version,		0,	__AVR_LIBC_VERSION_STRING__);
-	ATS_PrintProperty(ATS_CompiledDate,		0,	__DATE__);
-	ATS_PrintProperty(ATS_TestSuiteName,	0,	testSuiteName);
+	ATS_PrintProperty(ATS_Manufacturer,  0, manufName);
+	ATS_PrintProperty(ATS_CPU,           0, _AVR_CPU_NAME_);
+	ATS_PrintProperty(ATS_GCC_version,   0, __VERSION__);
+	ATS_PrintProperty(ATS_LIBC_version,  0, __AVR_LIBC_VERSION_STRING__);
+	ATS_PrintProperty(ATS_CompiledDate,  0, __DATE__);
+	ATS_PrintProperty(ATS_TestSuiteName, 0, testSuiteName);
 
-	freeMemory	=	ATS_GetFreeMemory();
+	freeMemory = ATS_GetFreeMemory();
 	sprintf(memoryMsg, "%d bytes", freeMemory);
-	ATS_PrintProperty(ATS_FreeMemory,	0,	memoryMsg);
+	ATS_PrintProperty(ATS_FreeMemory,    0, memoryMsg);
 
 	randomSeed(analogRead(0));
 
@@ -201,9 +184,9 @@ char	memoryMsg[48];
 //************************************************************************
 void	ATS_end()
 {
-unsigned long seconds;
-unsigned long microSecs;
-char buf[8];
+	unsigned long seconds;
+	unsigned long microSecs;
+	char buf[8];
 
 	gTestTotalElapsedTime += (micros() - gTestStartTime);
 
@@ -231,14 +214,14 @@ char buf[8];
 	}
 	Serial.println();
 
-	if (gYotalErrors == 0)
+	if (gTotalErrors == 0)
 	{
 		Serial.print("OK");
 	}
 	else
 	{
 		Serial.print("FAILED (failures=");
-		Serial.print(gYotalErrors);
+		Serial.print(gTotalErrors);
 		Serial.print(")");
 	}
 	Serial.println();
@@ -272,7 +255,7 @@ int	sLen;
 	else
 	{
 		Serial_print_P(gTextMsg_FAIL);
-		gYotalErrors++;
+		gTotalErrors++;
 	}
 	Serial.println();
 	

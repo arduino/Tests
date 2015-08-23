@@ -1,0 +1,32 @@
+########################################
+# Syntax Coloring Map
+########################################
+
+########################################
+# Datatypes (KEYWORD1)
+########################################
+
+
+
+########################################
+# Methods and Functions (KEYWORD2)
+########################################
+
+ATS_begin			KEYWORD2
+ATS_end				KEYWORD2
+ATS_PrintTestStatus		KEYWORD2
+ATS_Test_DigitalPin		KEYWORD2
+ATS_Test_PWM_Pin		KEYWORD2
+ATS_Test_AnalogInput		KEYWORD2
+ATS_Test_EEPROM			KEYWORD2
+ATS_TestSerialLoopback		KEYWORD2
+ATS_GetFreeMemory		KEYWORD2
+ATS_GetMaximumMemoryAllocated	KEYWORD2
+
+########################################
+# Constants (LITERAL1)
+########################################
+
+PASSED				LITERAL1
+FAILED				LITERAL1
+
