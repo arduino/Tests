@@ -6,7 +6,7 @@
 // ambigious overload error.
 
 #if ARDUINO >= 100 || defined(CORE_TEENSY)
-void Test_Equal(char *testString, char *expected, const String &actual)
+void Test_Equal(char *testString, char *expected, const String & actual)
 #else
 // the old string code does not define toCharArray() as const
 // this simple but ugly workaround is for Arduino 0022 and
@@ -15,15 +15,15 @@ void Test_Equal(char *testString, char *expected, const String &actual)
 void Test_Equal(char *testString, char *expected, String actual)
 #endif
 {
-  char buf[100]; actual.toCharArray(buf, 100);
-  boolean b = (strcmp(buf, expected) == 0);
-  ATS_PrintTestStatus(testString, b);
-  if (!b) {
-    Serial.print("expected '");
-    Serial.print(expected);
-    Serial.print("', actual '");
-    Serial.print(actual);
-    Serial.println("'");
-  }
+	char buf[100];
+	actual.toCharArray(buf, 100);
+	boolean b = (strcmp(buf, expected) == 0);
+	ATS_PrintTestStatus(testString, b);
+	if (!b) {
+		Serial.print("expected '");
+		Serial.print(expected);
+		Serial.print("', actual '");
+		Serial.print(actual);
+		Serial.println("'");
+	}
 }
-
