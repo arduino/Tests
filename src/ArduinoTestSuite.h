@@ -2,6 +2,9 @@
 //************************************************************************
 //*	Aug 31,	2010	<MLS> Started on TestArduino
 //************************************************************************
+#ifndef ARDUINO_TEST_SUITE_H_INCLUDED
+#define ARDUINO_TEST_SUITE_H_INCLUDED
+
 
 #if defined(ARDUINO) && ARDUINO >= 100
 #include "Arduino.h"
@@ -27,6 +30,14 @@ boolean	ATS_Test_DigitalPin(uint8_t digitalPinToTest);
 boolean	ATS_Test_PWM_Pin(uint8_t digitalPinToTest);
 boolean	ATS_Test_AnalogInput(uint8_t analogPintoTest);
 boolean	ATS_Test_EEPROM(void);
+
+#define ATS_Assert(c)  { \
+               /* maybe use much memory... */                                 \
+               String name = String(__FILE__) + "(" + String(__LINE__) + ")"; \
+               byte str[name.length() + 1];                                   \
+               name.getBytes(str, name.length() + 1);                         \
+               ATS_PrintTestStatus( (char *)str, c );                         \
+                       }
 
 short ATS_TestSerialLoopback(HardwareSerial *theSerialPort, const char *serialPortName);
 
@@ -62,3 +73,4 @@ extern int gTestCount;
 #define PASSED true
 #define FAILED false
 
+#endif

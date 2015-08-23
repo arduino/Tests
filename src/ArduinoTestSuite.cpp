@@ -150,11 +150,16 @@ static void ATS_PrintProperty(int propertyTagNum, const char *propertyName, cons
 //************************************************************************
 void ATS_begin(const char *manufName, const char *testSuiteName, int baudRate)
 {
+	static bool serialInitialized = false;
+
 	int freeMemory;
 	char memoryMsg[48];
 
-	Serial.begin(baudRate);
-	delay(100);
+	if (!serialInitialized ){
+		Serial.begin(baudRate);
+		delay(100);
+		serialInitialized = true;
+	}
 
 	gTotalErrors = 0;
 	gTestCount = 0;
