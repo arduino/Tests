@@ -157,6 +157,11 @@ void ATS_begin(const char *manufName, const char *testSuiteName, int baudRate)
 
 	if (!serialInitialized ){
 		Serial.begin(baudRate);
+		while (!Serial) {
+			;
+			// wait for serial port to connect.
+			// Needed for Leonardo only
+		}
 		delay(100);
 		serialInitialized = true;
 	}

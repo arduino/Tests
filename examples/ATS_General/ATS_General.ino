@@ -10,7 +10,7 @@
 
 #include <ArduinoTestSuite.h>
 
-#if defined(__AVR_ATmega168__) || defined(__AVR_ATmega328P__)
+#if defined(__AVR_ATmega168__) || defined(__AVR_ATmega328P__) || defined(__AVR_ATmega32U4__)
 	#define	kBoard_PinCount		20
 	#define	kBoard_AnalogCount	6
 #elif defined(__AVR_ATmega1280__) || defined(__AVR_ATmega2560__)
