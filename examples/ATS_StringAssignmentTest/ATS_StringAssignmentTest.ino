@@ -1,53 +1,47 @@
 //************************************************************************
-//*	Arduino String Memory test 
+//*     Arduino String Memory test 
 //*      Created, 3 strings, check memory status.
 //*
-//*		(C) 2010 by Rick Anderson
-//*		Open source as per standard Arduino code
+//*             (C) 2010 by Rick Anderson
+//*             Open source as per standard Arduino code
 //*
 //************************************************************************
-//*	Oct 16,	2010	<ROA> Started on String Test
+//*     Oct 16, 2010    <ROA> Started on String Test
 //************************************************************************
 
-#include	<ArduinoTestSuite.h>
+#include <ArduinoTestSuite.h>
 
 //************************************************************************
 void setup()
 {
-  int		startMemoryUsage;
-  /*
-    * Create variable for the tests. 
-   */
-   
-  String stringOne;
-  
-  //Assign stringOne to be equal to the longest string
-  stringOne = "<p>Lorem ipsum dolor sit amet</p><p>Ipsem</p><p>Quod</p>";
+	/*
+	 * Create variable for the tests. 
+	 */
+	String stringOne;
 
-  /*;
-   * initiate the test run
-   */
-  startMemoryUsage	=	ATS_GetFreeMemory();
-  ATS_begin("Arduino", "ATS_StringAssignmentTest");
+	//Assign stringOne to be equal to the longest string
+	stringOne = "<p>Lorem ipsum dolor sit amet</p><p>Ipsem</p><p>Quod</p>";
 
-  stringOne = "<HTML><HEAD><BODY>";
-  stringOne = "<UL><LI>item<LI>item<LI>item</UL>";
-  stringOne = "<p>Lorem ipsum dolor sit amet</p><p>Ipsem</p><p>Quod</p>";
+	/*;
+	 * initiate the test run
+	 */
+	int startMemoryUsage = ATS_GetFreeMemory();
+	ATS_begin("Arduino", "ATS_StringAssignmentTest");
 
-  ATS_ReportMemoryUsage(startMemoryUsage);
-  
-  /*
-   * Test complete
-   */
+	stringOne = "<HTML><HEAD><BODY>";
+	stringOne = "<UL><LI>item<LI>item<LI>item</UL>";
+	stringOne = "<p>Lorem ipsum dolor sit amet</p><p>Ipsem</p><p>Quod</p>";
 
-  ATS_end();
+	ATS_ReportMemoryUsage(startMemoryUsage);
 
+	/*
+	 * Test complete
+	 */
+	ATS_end();
 }
-
 
 //************************************************************************
 void loop()
 {
-
-
 }
+

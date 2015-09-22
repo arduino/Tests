@@ -22,80 +22,51 @@
 //*	Oct 28,	2010	<MLS> Started on Delay
 //************************************************************************
 
-#include	<ArduinoTestSuite.h>
+#include <ArduinoTestSuite.h>
 
 //************************************************************************
 void setup()
 {
-short			ii;
-short			testNum;
-int				startMemoryUsage;
-unsigned long	startMillis;
-unsigned long	endMillis;
-unsigned long	deltaMillis;
-unsigned long	errMillis;
-boolean			passed;
-char			testNameString[80];
+	short ii;
+	short testNum;
+	unsigned long startMillis;
+	unsigned long endMillis;
+	unsigned long deltaMillis;
+	unsigned long errMillis;
+	boolean passed;
+	char testNameString[80];
 
-
-	startMemoryUsage	=	ATS_GetFreeMemory();
-
+	int startMemoryUsage = ATS_GetFreeMemory();
 	ATS_begin("Arduino", "DelayTest");
-	
-	testNum	=	1;
-	//*	we start at 2 because 0/1 are RXD/TXD
-	for (ii=0; ii<1000; ii+= 15)
-	{
-		startMillis	=	millis();
-		
+	testNum = 1;
+	//* we start at 2 because 0/1 are RXD/TXD
+	for (ii = 0; ii < 1000; ii += 15) {
+		startMillis = millis();
 		delay(ii);
-
-		endMillis	=	millis();
-		
-		deltaMillis	=	endMillis - startMillis;
-		
-		if (deltaMillis >= ii)
-		{
-			errMillis	=	deltaMillis - ii;
+		endMillis = millis();
+		deltaMillis = endMillis - startMillis;
+		if (deltaMillis >= ii) {
+			errMillis = deltaMillis - ii;
+		} else {
+			errMillis = ii - deltaMillis;
 		}
-		else
-		{
-			errMillis	=	ii - deltaMillis;
+		if (errMillis <= 1) {
+			passed = true;
+		} else {
+			passed = false;
 		}
-		
-		if (errMillis <= 1)
-		{
-			passed	=	true;
-		}
-		else
-		{
-			passed	=	false;
-		}
-		sprintf(testNameString, "DelayTest.%02d (delay= %4d actual delay=%ld err=%ld)", testNum, ii, deltaMillis, errMillis);
-
+		sprintf(testNameString,
+			"DelayTest.%02d (delay= %4d actual delay=%ld err=%ld)",
+			testNum, ii, deltaMillis, errMillis);
 		ATS_PrintTestStatus(testNameString, passed);
-
-
 		testNum++;
 	}
-
-
-
-
 	ATS_ReportMemoryUsage(startMemoryUsage);
-
 	ATS_end();
-
 }
-
 
 //************************************************************************
 void loop()
 {
-
-
 }
-
-
-
 
